@@ -18,9 +18,6 @@ type Ring struct {
 
 // search will find the index of the node that is responsible for the range that
 // includes the hashed value of key.
-
-// NÃO CONSIGO ENTENDER ESSA NOTAÇÃO DE FUNÇÃO. O QUE É O QUÊ AQUI???? 
-// O que o (r *Ring) está fazendo aqui e para quê?????
 func (r *Ring) search(key string) int {
     /////////////////////////
     // YOUR CODE GOES HERE //

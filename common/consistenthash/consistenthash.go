@@ -5,6 +5,7 @@ import (
     "hash/crc32"
     "sort"
     "sync"
+	"log"
 )
 
 var ErrNodeNotFound = errors.New("node not found")
@@ -17,12 +18,30 @@ type Ring struct {
 
 // search will find the index of the node that is responsible for the range that
 // includes the hashed value of key.
+
+// NÃO CONSIGO ENTENDER ESSA NOTAÇÃO DE FUNÇÃO. O QUE É O QUÊ AQUI???? 
+// O que o (r *Ring) está fazendo aqui e para quê?????
 func (r *Ring) search(key string) int {
     /////////////////////////
     // YOUR CODE GOES HERE //
     /////////////////////////
 
-    return 0
+	// Verificando a soma hash da chave
+    hashSum := hashId(key)
+    index := 0
+
+	// Percorrendo o anel no sentido horário até que seja encontrada a posição correta (nó correto)
+	// Após encontrar a posição correta, pare!
+	log.Printf("[SEARCH] Searching ring node clockwise. Please, wait.\n")
+    for nodePos, node := range r.Nodes {
+		log.Printf("[SEARCH] Hostname = %s - hashId = %d - Ring Node = %d.\n", node.Id, node.HashId, nodePos)
+        index = nodePos
+        if hashSum <= node.HashId {
+			log.Printf("[SEARCH] OK! NODE %d FOUND!!\n", index)
+			break
+		}
+    }
+    return index
 }
 
 // NewRing will create a new Ring object and return a pointer to it.

@@ -193,7 +193,7 @@ func aggregateVotes(votes []*vote) (result string) {
 
 	lastTime := int64(-1)
 	for _, vote := range votes {
-		log.Printf("[COORDINATOR] Vote: %v\n", vote.value)
+		log.Printf("[COORDINATOR] Vote: %v - time = %d\n", vote.value, vote.timestamp)
 		if vote.timestamp > lastTime {
 			lastTime = vote.timestamp
 			result = vote.value

@@ -70,6 +70,13 @@ func (console *Console) Run() {
 			}
 
 			fmt.Printf("[CONSOLE] Rget result: '%v' = '%v'\n", key, value)
+
+			// PAULO, quando o coordenador cai depois de ter um valor (alice, hi), 
+			// depois volta e o valor mudou para (alice, oi),
+			// o rget não está atualizando o coordenador sem a linha abaixo que eu inclui.
+			console.server.RoutePut(key, value, quorum)
+			// Estou correto??
+
 		case "put":
 			if len(tokens) < 3 {
 				fmt.Println("[CONSOLE] usage: put <key> <value>")

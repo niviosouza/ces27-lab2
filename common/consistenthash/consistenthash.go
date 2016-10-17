@@ -25,20 +25,27 @@ func (r *Ring) search(key string) int {
 
 	// Verificando a soma hash da chave
     hashSum := hashId(key)
-    index := 0
+    index := -1
 
 	// Percorrendo o anel no sentido horário até que seja encontrada a posição correta (nó correto)
 	// Após encontrar a posição correta, pare!
-	log.Printf("[SEARCH] Searching ring node clockwise. Please, wait.\n")
+	log.Printf("[SEARCH] Searching ring node clockwise. Hash key = %d. Please, wait.\n", hashSum)
     for nodePos, node := range r.Nodes {
 		log.Printf("[SEARCH] Hostname = %s - hashId = %d - Ring Node = %d.\n", node.Id, node.HashId, nodePos)
-        index = nodePos
         if hashSum <= node.HashId {
-			log.Printf("[SEARCH] OK! NODE %d FOUND!!\n", index)
+			index = nodePos
+			log.Printf("[SEARCH] OK! NODE '%d' FOUND!!\n", index)
 			break
 		}
     }
-    return index
+
+	// Caso o hash da chave seja maior que todos os hashes dos nós do anel, deve-se tratar a volta completa no anel e o nó responsável passa a ser o nó '0'.
+	if index == -1 {
+		log.Printf("[SEARCH] OK! NODE '0' FOUND!!\n")
+	    return 0
+	} else {
+		return index
+	}
 }
 
 // NewRing will create a new Ring object and return a pointer to it.
